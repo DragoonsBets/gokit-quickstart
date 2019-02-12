@@ -17,7 +17,12 @@ all: build
 check: fmt build test
 
 build:
+	go get ./...
+	kit new service $(NAME)
+	rm main.go
 	CGO_ENABLED=$(CGO_ENABLED) $(GO) build -ldflags $(BUILDFLAGS) -o bin/$(NAME) $(MAIN_GO)
+	echo "*ALL OK!"
+	echo "- Now define the go services and run: kit generate service $(NAME) --dmw"
 
 test: 
 	CGO_ENABLED=$(CGO_ENABLED) $(GO) test $(PACKAGE_DIRS) -test.v
